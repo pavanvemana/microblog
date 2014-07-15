@@ -9,7 +9,15 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import os, dj_database_url
+
+here = lambda * x: os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
+
+PROJECT_ROOT = here("..")
+# root() gives us file paths from the root of the system to whatever
+# folder(s) we pass it starting at the parent directory of the current file.
+root = lambda * x: os.path.join(os.path.abspath(PROJECT_ROOT), *x)
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -20,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '^63xc^%@_12$($!ngp*p*e1%pj+gauj%1ss#33_e&2e10z9@8f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -29,7 +37,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = (
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +45,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+
+THIRD_PARTY_APPS = ()
+LOCAL_APPS = ()
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,10 +69,7 @@ WSGI_APPLICATION = 'microblog.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config()
 }
 
 # Internationalization
