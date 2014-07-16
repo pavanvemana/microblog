@@ -32,7 +32,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['pavanteja']
+ALLOWED_HOSTS = ['pavanteja','.herokuapp.com']
 
 
 # Application definition
