@@ -30,9 +30,9 @@ SECRET_KEY = '^63xc^%@_12$($!ngp*p*e1%pj+gauj%1ss#33_e&2e10z9@8f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['pavanteja']
 
 
 # Application definition
@@ -46,8 +46,8 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 )
 
-THIRD_PARTY_APPS = ()
-LOCAL_APPS = ()
+THIRD_PARTY_APPS = ('south',)
+LOCAL_APPS = ('blog',)
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -88,5 +88,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+STATICFILES_DIRS = ('assets','./assets','../assets')
 
 STATIC_URL = '/static/'

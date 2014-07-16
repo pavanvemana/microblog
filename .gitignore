@@ -1,2 +1,2 @@
 *.pyc
-microblog/settings/local.py
+local.py
