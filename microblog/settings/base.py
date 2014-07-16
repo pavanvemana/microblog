@@ -69,7 +69,7 @@ WSGI_APPLICATION = 'microblog.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': dj_database_url.config(default='postgres://pavanteja:hello123/microblog')
 }
 
 # Internationalization
