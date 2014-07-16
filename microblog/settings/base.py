@@ -91,3 +91,5 @@ USE_TZ = True
 STATICFILES_DIRS = ('assets','./assets','../assets')
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = STATIC_URL
