@@ -3,6 +3,7 @@
 {% block page_title %}Blog posts | {% endblock %}
 
 {% block page_content %}
+<a href="{% url 'blog:logout' %}">Logout</a>
 <h2>Blog Posts</h2>
 <ul>
     {% for post in post_list %}
@@ -11,5 +12,6 @@
     <li>Sorry, no posts yet. Check back soon!</li>
     {% endfor %}
 </ul>
+<a href="{%url 'blog:new_post'%}">Write a new post</a>
 {% endblock %}
 	

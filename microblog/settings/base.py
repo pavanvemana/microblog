@@ -100,3 +100,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../assets'),
 )
+
+#LOGIN_REDIRECT_URL = "/blog/auth"
+LOGIN_URL = "/blog/auth"
+LOGOUT_REDIRECT_URL = "/"
