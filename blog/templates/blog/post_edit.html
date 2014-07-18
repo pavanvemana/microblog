@@ -1,0 +1,32 @@
+{% extends '_layouts/base.html' %}
+{%block page_title%} Edit Post {%endblock%}
+{%block page_content%}
+<div class="form-container">
+	<form role="form" action="{{action}}" method="post">
+	{% csrf_token %}
+		<input type="hidden" value="{{id}}" name="id">	
+		<div class="form-group">
+		    {{ form.title.errors }}
+		    <label for="title">Title</label>
+		    {{ form.title }}
+		</div>
+		<div class="form-group">
+		    {{ form.slug.errors }}
+		    <label for="slug">Slug</label>
+		    {{ form.slug }}
+		</div>
+		<div class="form-group">
+		    {{ form.content.errors }}
+		    <label for="content">Write your post</label>
+		    {{ form.content }}
+		</div>
+		<div class="form-group">
+			<label for="content">Published</label>
+		    {{ form.published }}
+		</div>
+		<button type="submit" class="btn btn-default">Save Changes</button>
+	</form>
+	<a href="{% url 'blog:list' %}">&larr; Blog list</a>
+</div>
+
+{%endblock%}

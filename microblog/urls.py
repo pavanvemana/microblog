@@ -14,3 +14,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 )
+handler404 = views.view_404
+handler500 = views.view_500

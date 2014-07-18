@@ -24,5 +24,9 @@ class Post(models.Model):
 	def get_absolute_url(self):
 		return ("blog:detail",(),{"slug": self.slug})
 
-class Meta:
-	ordering = ['-created_at', 'title']
+	class Meta:
+		ordering = ['-created_at', 'title']
+
+class Follower(models.Model):
+	creator_uname = models.ForeignKey(User,related_name='request_set')
+	following_uname = models.ForeignKey(User,related_name='following_set')

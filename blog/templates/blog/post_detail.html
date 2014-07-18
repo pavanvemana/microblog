@@ -4,6 +4,7 @@
 {% block page_title %} {{post.title}} {% endblock %}
 
 {% block page_content %}
+<a href="{% url 'blog:edit' slug=post.slug %}" class='btn btn-default'>Edit</a>
 <h2>{{post.title}}</h2>
 {{post.content}}
 <p>{{post.updated_at}}</p>
