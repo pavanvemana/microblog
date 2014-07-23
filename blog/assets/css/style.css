@@ -1,0 +1,26 @@
+.form-control{
+	width: 30%;
+}
+
+body{
+	background: white url("../images/background.jpg") no-repeat left;
+}
+
+.form-container{
+	padding-left: 450px;
+	padding-top: 20px;
+	width: 100%;
+}
+
+h1{
+	text-align: center;
+	text-shadow: 2px 3px 3px white;
+}
+
+.error-page{
+	background: white url("../images/404.jpg") no-repeat left;
+}
+
+.userlist{
+	float: right;
+}

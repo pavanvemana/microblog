@@ -1,5 +1,7 @@
 {% extends "_layouts/base.html" %}
 
 {% block page_content %}
-<a class='btn btn-primary' href="{% url 'blog:list' %}">Read my Blog</a>
+<div class='form-container'>
+	<a class='btn btn-primary' href="{% url 'blog:list' %}">Read my Blog</a>
+</div>
 {% endblock %}

@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 	url(r"^register/$", views.RegistrationView.as_view(), name="register"),
 	url(r"^logout/$", views.Logout.as_view(), name="logout"),
 	url(r"^new/$", views.PostNewView.as_view(), name="new_post"),
-	#url(r"^new_post/$", views.new_post,name="post_submit"),
+	url(r"^(?P<uid>[0-9]+)/$", views.UserPostView.as_view(), name='user_post'),
 	url(r"^(?P<slug>[\w-]+)/$", views.PostDetailView.as_view(), name="detail"),
 	url(r"^edit/(?P<slug>[\w-]+)/$", views.PostEditView.as_view(), name="edit")
 	)

@@ -99,8 +99,16 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '../assets'),
+    os.path.join(BASE_DIR,'../blog/assets')
 )
 
 #LOGIN_REDIRECT_URL = "/blog/auth"
 LOGIN_URL = "/blog/auth"
 LOGOUT_REDIRECT_URL = "/"
+
+CACHES = {
+    'default':{
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        'TIMEOUT': 60,  
+    }
+}

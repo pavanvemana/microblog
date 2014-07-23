@@ -3,8 +3,15 @@
 {% block page_title %}Blog posts | {% endblock %}
 
 {% block page_content %}
+{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <div class='form-container'>
-	<a href="{% url 'blog:logout' %}">Logout</a>
 	<h2>Blog Posts</h2>
 	<ul>
 	    {% for post in post_list %}
@@ -14,6 +21,12 @@
 	    {% endfor %}
 	</ul>
 	<a href="{%url 'blog:new_post'%}">Write a new post</a>
+</div>
+<div class='userlist'>
+	<h2>View other user posts</h2>
+	{%for user in user_list%}
+		<p style="text-align:center"><a href="{% url 'blog:user_post' user.id %}">{{user.username}}</a></p>
+	{%endfor%}
 </div>
 {% endblock %}
 	

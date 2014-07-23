@@ -7,7 +7,7 @@ class PostForm(forms.Form):
 	widget = forms.TextInput(attrs={'class':'form-control'})
 	widget_author = forms.TextInput(attrs={'class':'form-control','readonly':True})
 	author = forms.CharField(label='author', max_length=25,widget=widget_author)
-	title  = forms.CharField(label='title', max_length=40,widget=widget)
+	title  = forms.CharField(label='title', max_length=40,widget=widget, help_text='Your post title')
 	content = forms.CharField(label='content', max_length=100,widget=forms.Textarea(attrs={'class':'form-control','rows':5}))
 	def clean(self):	
 		return self.cleaned_data
