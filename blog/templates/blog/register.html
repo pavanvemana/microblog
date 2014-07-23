@@ -2,23 +2,9 @@
 {%block page_content%}
 <div class="form-container">
 	<form role="form" action="{{action}}" method='post'>
-		{% csrf_token %}
+	{% csrf_token %}
 		{{ form.non_field_errors }}
-		<div class="form-group">
-		    {{ form.username.errors }}
-		    <label for="username">Username</label>
-		    {{ form.username }}
-		</div>
-		<div class="form-group">
-		    {{ form.password.errors }}
-		    <label for="password">Password</label>
-		    {{ form.password }}
-		</div>
-		<div class="form-group">
-		    {{ form.email.errors }}
-		    <label for="email">Email</label>
-		    {{ form.email }}
-		</div>
+		{% include "_layouts/form_layout.html" %}
 		<button type="submit" class="btn btn-default">Submit</button>
 	</form>
 	<a href="/blog/auth?next=/blog/">Already have an account? Login</a>

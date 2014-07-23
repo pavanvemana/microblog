@@ -7,16 +7,7 @@
 	<form role="form" action="{{action}}" method="post">
 	{% csrf_token %}
 		{{ form.non_field_errors }}
-		<div class="form-group">
-		    {{ form.username.errors }}
-		    <label for="username">Username</label>
-		    {{ form.username }}
-		</div>
-		<div class="form-group">
-		    {{ form.password.errors }}
-		    <label for="password">Password</label>
-		    {{ form.password }}
-		</div>
+		{% include "_layouts/form_layout.html" %}
 		<input type="hidden" value="{{next}}" name="next">
 		<button type="submit" class="btn btn-default">Login</button>
 	</form>
