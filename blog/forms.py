@@ -9,12 +9,8 @@ class PostForm(forms.Form):
 	author = forms.CharField(label='author', max_length=25,widget=widget_author)
 	title  = forms.CharField(label='title', max_length=40,widget=widget, help_text='Your post title')
 	content = forms.CharField(label='content', max_length=100,widget=forms.Textarea(attrs={'class':'form-control','rows':5}))
-	def clean(self):	
-		return self.cleaned_data
 
 class AuthenticationForm(forms.ModelForm):
-	password = forms.CharField(label="password", widget=forms.PasswordInput(attrs={'class':'form-control'}))
-
 	class Meta:
 		model = User
 		fields = ('username','password')
@@ -22,23 +18,19 @@ class AuthenticationForm(forms.ModelForm):
 			'username':forms.TextInput(attrs={'class':'form-control'}),
 			'password':forms.TextInput(attrs={'class':'form-control'})
 		}
-
 	def clean(self):
 		return self.cleaned_data
 
+
 class RegistrationForm(forms.ModelForm):
-	password = forms.CharField(label="password", widget=forms.PasswordInput(attrs={'class':'form-control'}))
+	email = forms.CharField(max_length=128,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
 	class Meta:
 		model = User
 		fields = ('username','email','password')
 		widgets = {
 			'username':forms.TextInput(attrs={'class':'form-control'}),
-			'email':forms.TextInput(attrs={'class':'form-control'})
+			'password':forms.TextInput(attrs={'class':'form-control'}),
 		}
-
-
-	def clean(self):
-		return self.cleaned_data
 
 class PostEditForm(forms.ModelForm):
 	class Meta:
@@ -48,5 +40,3 @@ class PostEditForm(forms.ModelForm):
 		widgets = {
 			'title':widget, 'slug':widget,'content':forms.Textarea(attrs={'class':'form-control','rows':5})
 		}
-	def clean(self):
-		return self.cleaned_data
