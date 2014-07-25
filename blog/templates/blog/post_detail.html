@@ -10,6 +10,7 @@
 {% endifequal %}
 <h2>{{post.title}}</h2>
 {{post.content}}
+{{post.files}}
 <p>{{post.updated_at}}</p>
 <a href="{% url 'blog:list' %}">&larr; Blog list</a>
 {% endblock %}

@@ -106,9 +106,13 @@ STATICFILES_DIRS = (
 LOGIN_URL = "/blog/auth"
 LOGOUT_REDIRECT_URL = "/"
 
+
 CACHES = {
     'default':{
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         'TIMEOUT': 60,  
     }
 }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

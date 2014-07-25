@@ -3,7 +3,7 @@
 {% block page_title %} {{post.title}} {% endblock %}
 {% block page_content %}
 <div class="form-container">
-	<form role="form" action="{{action}}" method="post">
+	<form role="form" action="{{action}}" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 		{% include "_layouts/form_layout.html" %}
 		<button type="submit" class="btn btn-default">Submit</button>

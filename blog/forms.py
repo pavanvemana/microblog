@@ -9,6 +9,7 @@ class PostForm(forms.Form):
 	author = forms.CharField(label='author', max_length=25,widget=widget_author)
 	title  = forms.CharField(label='title', max_length=40,widget=widget, help_text='Your post title')
 	content = forms.CharField(label='content', max_length=100,widget=forms.Textarea(attrs={'class':'form-control','rows':5}))
+	files = forms.FileField(label='Add File', required=False)
 
 class AuthenticationForm(forms.ModelForm):
 	class Meta:

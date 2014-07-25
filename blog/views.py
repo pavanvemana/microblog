@@ -2,6 +2,7 @@ from .models import Post
 from django.conf import settings
 from django.views.generic import ListView,DetailView,TemplateView, FormView
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.http import require_safe
 from django.core.urlresolvers import reverse
 from . import forms
 from django.shortcuts import render, render_to_response, get_object_or_404
@@ -16,7 +17,15 @@ from django.contrib.auth.views import password_change, password_change_done
 from django.contrib.auth import login as auth_login, logout as auth_logout,authenticate
 from django.template import RequestContext
 from django.core.signing import Signer
+from reportlab.pdfgen import canvas
 
+
+def handle_uploaded_file(f,request):
+	path = './'+str(f.name)+'_'+str(request.user)
+	with open(path,'wb+') as dest:
+		dest.write(f.read())
+	print(f.read())
+	return path
 
 # Create your views here.
 class LoginMixinView(object):
@@ -40,11 +49,24 @@ class PostListView(LoginMixinView,ListView):
 
 class PostDetailView(DetailView, LoginMixinView):
 	model = Post
+	
+	def render_to_response(self,context,**kwargs):
+		file_name = Post.objects.filter(slug=context['post'].slug).first().files
+		response = HttpResponse(content_type='application/pdf')
+		response['Content-Disposition'] = 'attachement;filename='+str(file_name)
+		p = canvas.Canvas(response)
+		f = open(str(file_name),'rb+')
+		p.drawString(100, 100, f.read())
+		p.showPage()
+		p.save()
+		return response
+
 
 class UserPostView(LoginMixinView, PublishedPostsMixin, ListView):
 	def get(self,request,*args,**kwargs):
 		posts = Post.objects.filter(author=kwargs['uid'], published=True)
 		return render(request,'blog/user_post.html',{'post_list':posts})
+
 
 class PostNewView(LoginMixinView,FormView):
 	model = Post
@@ -53,14 +75,15 @@ class PostNewView(LoginMixinView,FormView):
 		form = forms.PostForm(initial={'author':request.user})
 		return render(request, 'blog/new.html', {'form': form})
 	def post(self, request, *args, **kwargs):
-		form = forms.PostForm(request.POST)
+		form = forms.PostForm(request.POST, request.FILES)
 		if form.is_valid():
 			author = User.objects.get(username=form.cleaned_data['author'])
 			title = form.cleaned_data['title']
 			content = form.cleaned_data['content']
 			created_at = timezone.now()
 			updated_at = timezone.now()
-			Post.objects.create(author=author, title=title, created_at=created_at, updated_at=updated_at, content=content)
+			files = handle_uploaded_file(request.FILES['files'], request)
+			Post.objects.create(author=author, title=title, created_at=created_at, updated_at=updated_at, content=content, files=files)
 			return HttpResponseRedirect(reverse('blog:list'))
 		return render(request, 'blog/new.html', {'form': form})
 
@@ -68,7 +91,6 @@ class PostNewView(LoginMixinView,FormView):
 class AuthView(FormView):
 	form_class = forms.AuthenticationForm
 	model = User
-	#template_name = 'blog/auth.html'
 	def get(self, request, *args, **kwargs):
 		if request.user.is_authenticated():
 			return HttpResponseRedirect('/blog/')
@@ -120,6 +142,7 @@ class RegistrationView(FormView):
 
 
 class Logout(FormView):
+	@method_decorator(require_safe)
 	def get(self, request, *args, **kwargs):
 		auth_logout(request)
 		return HttpResponseRedirect(settings.LOGOUT_REDIRECT_URL)
