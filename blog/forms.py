@@ -17,21 +17,31 @@ class AuthenticationForm(forms.ModelForm):
 		fields = ('username','password')
 		widgets = {
 			'username':forms.TextInput(attrs={'class':'form-control'}),
-			'password':forms.TextInput(attrs={'class':'form-control'})
+			'password':forms.PasswordInput(attrs={'class':'form-control'})
 		}
-	def clean(self):
-		return self.cleaned_data
 
 
 class RegistrationForm(forms.ModelForm):
+	repassword = forms.CharField(label='confirm password',max_length=128,required=True,widget=forms.PasswordInput(attrs={'class':'form-control'}))
 	email = forms.CharField(max_length=128,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
 	class Meta:
 		model = User
 		fields = ('username','email','password')
 		widgets = {
 			'username':forms.TextInput(attrs={'class':'form-control'}),
-			'password':forms.TextInput(attrs={'class':'form-control'}),
+			'password':forms.PasswordInput(attrs={'class':'form-control'}),
 		}
+
+	def clean_repassword(self):
+		password = self.cleaned_data['password']
+		repassword = self.cleaned_data['repassword']
+		if  password != repassword:
+			raise forms.ValidationError('Passwords dont match')
+		if not repassword:
+			raise forms.ValidationError('You must confirm password')
+		return self.cleaned_data
+			
+		
 
 class PostEditForm(forms.ModelForm):
 	class Meta:
